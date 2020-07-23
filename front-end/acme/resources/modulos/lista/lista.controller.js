@@ -49,12 +49,7 @@ app.controller('ListaController', function ($scope, $http, ListaFactory, $mdDial
       locals: {
         contrato: contrato
       }
-    })
-      .then(function (novoCtResponse) {
-        console.log(novoCtResponse); // chamar push na lista
-      }, function () {
-        console.info('Você cancelou a edição do contrato.');
-      });
+    });
   };
 
   vm.addContrato = function (ev) {
@@ -68,20 +63,13 @@ app.controller('ListaController', function ($scope, $http, ListaFactory, $mdDial
       locals: {
         contrato: undefined
       }
-    })
-      .then(function (novoCtResponse) {
-        console.log(novoCtResponse); // chamar push na lista
-        if (novoCtResponse) vm.lista.push(novoCtResponse);
-      }, function () {
-        console.info('Você cancelou a edição do contrato.');
-      });
+    });
   };
 
   vm.alterarStatusTarefa = function (idTarefa) {
     $http.patch(`//localhost:8081/acme/api/tarefa/${idTarefa}`)
       .then(function (res) {
         vm.getListaContratos();
-        console.log('atualizou e consultou novamente');
       })
   }
 
@@ -112,8 +100,8 @@ app.controller('ListaController', function ($scope, $http, ListaFactory, $mdDial
         notification('Tarefa adicionada');
       }, function error(err) {
         notification('Erro ao salvar tarefa');
-      })
-      // vm.getListaContratos();
+      });
+
       $route.reload();
       $mdDialog.hide();
     };
@@ -129,7 +117,7 @@ app.controller('ListaController', function ($scope, $http, ListaFactory, $mdDial
 
     if (totalSelecionado > 0) {
       var confirm = $mdDialog.confirm()
-        .title('Tem certeza que deseja excluir os contatos selecionados?')
+        .title('Tem certeza que deseja excluir as tarefas selecionadas?')
         .textContent('Esta ação não poderá ser desfeita.')
         .ariaLabel('Confirmação de exclusão')
         .targetEvent(ev)
@@ -139,11 +127,9 @@ app.controller('ListaController', function ($scope, $http, ListaFactory, $mdDial
       $mdDialog.show(confirm).then(function () {
         vm.excluirContratosSelecionados();
         vm.getListaContratos();
-      }, function () {
-        console.info = 'Cancelamento de exclusão';
       });
     } else {
-      notification('Selecione algum contrato para excluir');
+      notification('Selecione alguma tarefa para excluir');
     }
 
   };
