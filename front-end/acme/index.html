@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="myApp" ng-controller="MainController">
+
+<head>
+  <title>Lista de contratos</title>
+  <meta name="description" content="Listagem de todos contratos da empresa">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="resources/styles/estilo.css">
+  <script src="https://momentjs.com/downloads/moment.min.js"></script>
+</head>
+
+<body>
+  <md-content id="corpo-page">
+    <main ng-view='' id="conteudo"></main>
+  </md-content>
+
+  <!-- AngularJS Dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.js"></script>
+
+  <!-- Modulos dependencias-->
+  <script src="app.js"></script>
+  <script src="resources/modulos/main/main.controller.js"></script>
+  <script src="resources/modulos/lista/lista.controller.js"></script>
+  <script src="resources/modulos/lista/lista.factory.js"></script>
+
+
+</body>
+
+</html>

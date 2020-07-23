@@ -1,0 +1,113 @@
+<md-toolbar ng-show="!showSearch" class="menu">
+  <div class="md-toolbar-tools">
+    <md-button ng-hide="excluir" ng-click="toggleLeft()" hide-gt-xs aria-label="Menu"
+      class="md-icon-button material-icons">
+      menu
+    </md-button>
+    <h1 ng-hide="excluir">Lista de Tarefas</h1>
+    <md-button ng-show="excluir" ng-click="excluir = false" aria-label="Voltar"
+      class="md-icon-button material-icons back-top">
+      arrow_back
+    </md-button>
+    <h2 ng-show="excluir">Excluir</h2>
+    <span flex></span>
+
+    <md-button hide show-gt-xs aria-label="Adicionar contrato" ng-hide="excluir" ng-click="addContrato($event);"
+      class="md-icon-button material-icons">
+      add
+      <md-tooltip> Adicionar </md-tooltip>
+    </md-button>
+    <md-button hide show-gt-xs aria-label="Excluir contrato" ng-click="excluir = true" ng-hide="excluir"
+      class="md-icon-button material-icons">
+      delete
+      <md-tooltip> Excluir </md-tooltip>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+  <md-toolbar class="md-theme-indigo">
+    <h1 class="md-toolbar-tools">
+      <md-button ng-click="toggleLeft()" aria-label="Back" class="md-icon-button material-icons">
+        arrow_back
+      </md-button>
+      <span> Menu</span>
+    </h1>
+  </md-toolbar>
+
+  <md-content>
+    <md-list flex id="menu-movel">
+      <md-list-item ng-click="toggleLeft(); showSearch = true;">
+        <div class="md-list-item-text" layout="row" layout-align="space-around center">
+          <i class="material-icons">search </i>
+          <span> Pesquisar </span>
+        </div>
+      </md-list-item>
+      <md-list-item ng-click="toggleLeft(); addContrato($event);">
+        <div class="md-list-item-text" layout="row" layout-align="space-around center">
+          <i class="material-icons">add </i>
+          <span> Adicionar </span>
+        </div>
+      </md-list-item>
+      <md-list-item ng-click="toggleLeft(); excluir = true;">
+        <div class="md-list-item-text" layout="row" layout-align="space-around center">
+          <i class="material-icons">delete </i>
+          <span> Excluir </span>
+        </div>
+      </md-list-item>
+    </md-list>
+
+  </md-content>
+</md-sidenav>
+
+<md-list flex class="no-padding">
+  <md-subheader layout-fill ng-if="lista.length == 0" class="no-outline">
+    Não existem tarefas cadastradas!
+  </md-subheader>
+  <md-subheader layout-fill ng-click="selecionaTodos();" class="no-outline pointer" ng-show="excluir">
+    <md-checkbox hide ng-model="todosSelecionados" aria-label="Selecionar todos contratos"></md-checkbox>
+    <strong>Selecionar todos</strong>
+  </md-subheader>
+  <md-divider></md-divider>
+
+  <md-list-item class="md-2-line" ng-repeat="ct in lista | orderBy: ordemLista" ng-click="selecionaContrato($event, ct)"
+    ng-hide="excluir">
+    <md-checkbox ng-model="ct.checked" ng-click="alterarStatusTarefa(ct.id)"></md-checkbox>
+    <div class="md-list-item-text no-outline" layout="column" ng-click="ct.selecionado = !ct.selecionado">
+      <p><strong>{{ct.descricao}}</strong></p>
+      <p>{{ct.data | date:shortDate}}</p>
+    </div>
+    <md-divider></md-divider>
+  </md-list-item>
+
+  <md-list-item class="md-2-line" ng-repeat="ct in lista | orderBy: ordemLista" ng-show="excluir" ng-click="null"
+    class="no-outline pointer">
+    <md-checkbox ng-model="ct.selecionado"></md-checkbox>
+    <div class="md-list-item-text no-outline" layout="column" ng-click="ct.selecionado = !ct.selecionado">
+      <p><strong>{{ct.descricao}}</strong></p>
+      <p>{{ct.data | date:shortDate}}</p>
+      <p><strong>Criado em: </strong>{{ct.createdOn  | date:shortDate}}</p>
+    </div>
+    <md-divider></md-divider>
+  </md-list-item>
+
+  <md-menu ng-hide="excluir">
+    <md-button aria-label="Reordenar lista" ng-click="openMenuReordenacao($mdMenu, $event)" ng-hide="excluir"
+      class="material-icons md-fab md-fab-bottom-right docs-scroll-fab md-ink-ripple scrolling">
+      sort
+      <md-tooltip md-direction="left"> Reordenar lista </md-tooltip>
+    </md-button>
+    <md-menu-content ng-mouseleave="$mdMenu.close()">
+      <label class="md-padding"><strong>Ordenar por:</strong></label>
+      <md-menu-item ng-repeat="opcao in opcoesMenu | orderBy: 'nome'">
+        <md-button ng-bind="opcao.nome" aria-label="opcao.nome" ng-click="ordenarListaPor(opcao.order)"></md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+
+  <md-button aria-label="Excluir contrato" ng-click="confirmaExclusao($event)" ng-show="excluir"
+    class="material-icons md-fab md-fab-bottom-right docs-scroll-fab md-ink-ripple scrolling">
+    delete_forever
+    <md-tooltip md-direction="left"> Deletar </md-tooltip>
+  </md-button>
+</md-list>

@@ -1,0 +1,45 @@
+<md-dialog aria-label="Tarefa">
+  <form ng-cloak name="edicaoForm" novalidate>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Tarefa <span ng-bind="ct.id"></span></h2>
+        <span flex></span>
+        <md-button class="md-icon-button material-icons" ng-click="cancel()">
+          clear
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="column">
+
+          <md-input-container>
+            <label>Data</label>
+            <md-datepicker ng-model="ct.data" name="data" md-placeholder="DD/MM/AAAA" data-ng-disabled="!edicao"
+              ng-required="true" format="dd/MM/yyyy"></md-datepicker>
+            <div ng-messages="edicaoForm.data.$error">
+              <div ng-message="required">campo obrigatório!</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Descricao</label>
+            <input name="descricao" ng-model="ct.descricao" data-ng-disabled="!edicao" ng-required="true">
+            <div ng-messages="edicaoForm.descricao.$error">
+              <div ng-message="required">campo obrigatório!</div>
+            </div>
+          </md-input-container>
+
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" ng-show="edicao && novoct" >
+      <span flex></span>
+      <md-button type="submit" ng-click="salvar(ct)" class="md-raised md-primary" ng-disabled="edicaoForm.$invalid">
+        Salvar
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
